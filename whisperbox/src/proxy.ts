@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextRequest } from 'next/server'
 export {default} from "next-auth/middleware"
 import { getToken } from 'next-auth/jwt'
 
@@ -20,7 +20,10 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
-  // return NextResponse.redirect(new URL('/home', request.url))
+  if(!token && url.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/sign-in', request.url))
+  }
+
 }
 
  
