@@ -1,9 +1,12 @@
-import React from 'react'
-import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from '../ui/card'
+'use client'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '../ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { X } from 'lucide-react'
 import { Message } from '@/model/User.model'
+import axios from 'axios'
+import { ApiResponse } from '@/types/ApiResponse'
+import { toast } from 'sonner'
 
 type MessageCardProps = {
   message: Message,
@@ -11,8 +14,10 @@ type MessageCardProps = {
 }
 const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
 
-  const handleDeleteConfirm = () => {
-    
+  const handleDeleteConfirm = async() => {
+    const response = await axios.delete<ApiResponse>(`/api/deleteMessage/${message._id.toString()}`);
+    toast.success(response.data.message);
+    onMessageDelete(message._id.toString());
   }
 
   return (

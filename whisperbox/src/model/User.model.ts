@@ -12,7 +12,7 @@ const MessageSchema: Schema<Message>  = new Schema ({
     },
     createdAt: {
         type: Date,
-        required: true
+        default: Date.now
     }
 })
 
@@ -38,7 +38,7 @@ const UserSchema: Schema<User> = new Schema({
         type: String,
         required: [true, "Email is required"],
         unique: true,
-        // match: [ ,"Enter a valid email"]
+        match: [/^\S+@\S+\.\S+$/, "Enter a valid email"],
     },
     password: {
         type: String, 
@@ -54,7 +54,7 @@ const UserSchema: Schema<User> = new Schema({
     },
     isAcceptingMessage: {
         type: Boolean,
-        Default: true
+        default: true
     },
     isVerified: {
         type: Boolean,
