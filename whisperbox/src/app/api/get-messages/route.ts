@@ -22,7 +22,6 @@ export async function GET(request: Request) {
     }
 
     const userId = new mongoose.Types.ObjectId(user._id);
-    console.log(userId);
     try {
 
         const user = await UserModel.aggregate([
@@ -36,8 +35,6 @@ export async function GET(request: Request) {
                 }
             }
         ])
-
-        console.log(user);
 
 
         if (!user || user.length === 0) {
@@ -64,7 +61,7 @@ export async function GET(request: Request) {
 
 
     } catch (error) {
-        console.log("Failed to get messages", error);
+        // console.log("Failed to get messages", error);
         return Response.json(
             {
                 success: false,

@@ -42,7 +42,7 @@ export async function POST(request: Request) {
 
 
     } catch (error) {
-        console.log("Error verifying user", error);
+        // console.log("Error verifying user", error);
         return Response.json({
             success: false,
             message: "Error verifying user"

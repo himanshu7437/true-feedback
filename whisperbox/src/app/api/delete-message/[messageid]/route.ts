@@ -44,7 +44,7 @@ export async function DELETE(request: Request, {params}: {params: Promise<{ mess
             { status: 200 },
         );
     } catch (error) {
-        console.log("Error in delete message route", error)
+        // console.log("Error in delete message route", error)
         return Response.json(
             {
                 success: false,

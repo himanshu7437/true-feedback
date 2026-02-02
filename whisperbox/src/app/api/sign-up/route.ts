@@ -82,7 +82,7 @@ export async function POST(request: Request) {
 
 
     } catch (error) {
-        console.error("");
+        // console.log("User signup route error", error)
         return Response.json(
             {
                 success: false,

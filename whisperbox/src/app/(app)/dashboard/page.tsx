@@ -12,7 +12,7 @@ import axios, { AxiosError } from 'axios';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { MessageInterface } from '@/types/MessageInterface';
@@ -56,9 +56,9 @@ const page = () =>  {
       try {
         const response = await axios.get<ApiResponse>('/api/get-messages');
         const result: MessageInterface[] = (response.data.messages || []).map(msg => ({
-        _id: msg._id.toString(), // convert ObjectId to string
+        _id: msg._id.toString(),
         content: msg.content,
-        createdAt: msg.createdAt, // or new Date(msg.createdAt) if you want Date objects
+        createdAt: msg.createdAt,
       }));
 
       setMessages(result);

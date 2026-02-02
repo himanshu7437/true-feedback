@@ -19,7 +19,7 @@ export async function POST() {
       result: text,
     });
   } catch (error: any) {
-    console.error("Gemini error:", error);
+    // console.error("Gemini error:", error);
     return NextResponse.json(
       { error: error.message },
       { status: 500 }
