@@ -22,14 +22,23 @@ export async function GET(request: Request) {
     }
 
     const userId = new mongoose.Types.ObjectId(user._id);
-
+    console.log(userId);
     try {
+
         const user = await UserModel.aggregate([
-            { $match: { id: userId } },
-            { $unwind: '$messages' },
+            { $match: { _id: userId } },
+            { $unwind: { path: '$messages', preserveNullAndEmptyArrays: true } }, 
             { $sort: { 'messages.createdAt': -1 } },
-            { $group: { _id: '$_id', messages: { $push: '$messages' } } }
+            {
+                $group: {
+                    _id: '$_id',
+                    messages: { $push: '$messages' }
+                }
+            }
         ])
+
+        console.log(user);
+
 
         if (!user || user.length === 0) {
             return Response.json({
@@ -38,10 +47,21 @@ export async function GET(request: Request) {
             }, { status: 401 })
         }
 
-        return Response.json({
-            success: true,
-            messages: user[0].messages
-        }, { status: 200 })
+        const messages = user[0].messages.map((msg: any) => ({
+            _id: msg._id.toString(),
+            content: msg.content,
+            createdAt: msg.createdAt,
+        }));
+
+
+        return Response.json(
+            {
+                success: true,
+                messages,
+            },
+            { status: 200 }
+        );
+
 
     } catch (error) {
         console.log("Failed to get messages", error);

@@ -10,7 +10,8 @@ export const authOptions: NextAuthOptions = {
             id: "credentials",
             name: "Credentials",
             credentials: {
-                email: { label: "Email", type: "text" }, 
+                email: { label: "Email", type: "text" },
+                identifier: { label: "Email or Username", type: "text" },
                 password: { label: "Password", type: "password" }
             },
 
@@ -20,23 +21,29 @@ export const authOptions: NextAuthOptions = {
                 try {
                     const user = await UserModel.findOne({
                         $or: [
-                            {email: credentials.identifier},
-                            {username: credentials.identifier}
+                            { email: credentials.identifier },
+                            { username: credentials.identifier }
                         ]
                     })
 
-                    if(!user) {
+                    if (!user) {
                         throw new Error("No user found with this email");
                     }
 
-                    if(!user.isVerified) {
+                    if (!user.isVerified) {
                         throw new Error("Please verify your account before login")
                     }
 
                     const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
 
-                    if(isPasswordCorrect) {
-                        return user;
+                    if (isPasswordCorrect) {
+                        return {
+                            _id: user._id.toString(),
+                            email: user.email,
+                            username: user.username,
+                            isVerified: user.isVerified,
+                            isAcceptingMessages: user.isAcceptingMessage,
+                        }
                     } else {
                         throw new Error("Incorrect Password");
                     }
@@ -48,23 +55,24 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
-            if(user) {
+            if (user) {
                 token._id = user._id?.toString();
                 token.isVerified = user.isVerified;
-                token.isAcceptingMessages = user.isAcceptingMessages;
+                token.isAcceptingMessages = user.isAcceptingMessage;
                 token.username = user.username;
             }
             return token
         },
         async session({ session, token }) {
-            if(token) {
-                session.user._id = token._id;
-                session.user.isVerified = token.isVerified;
-                session.user.isAcceptingMessages = token.isAcceptingMessages;
-                session.user.username = token.username;
+            if (token && session.user) {
+                session.user._id = token._id as string;
+                session.user.isVerified = token.isVerified as boolean;
+                session.user.isAcceptingMessages = token.isAcceptingMessages as boolean;
+                session.user.username = token.username as string;
             }
-            return session
+            return session;
         }
+
     },
     pages: {
         signIn: '/sign-in',
