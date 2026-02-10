@@ -1,0 +1,5 @@
+MONGODB_URI="mongodb://127.0.0.1:27017/whisperbox "
+RESEND_API_KEY=""
+NEXTAUTH_SECRET="^o*-56a9Az$X!,A6"
+NEXTAUTH_URL="http://localhost:3000/sign-in"
+GEMINI_API_KEY=""
