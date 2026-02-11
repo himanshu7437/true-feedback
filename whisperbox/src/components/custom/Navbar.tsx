@@ -11,7 +11,7 @@ const Navbar = () => {
   const user: User = session?.user as User
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur">
+    <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
         
         {/* LOGO */}
