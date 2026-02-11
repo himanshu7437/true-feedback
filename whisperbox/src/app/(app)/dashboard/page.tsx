@@ -112,7 +112,7 @@ const page = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black px-4 py-10 text-white">
+    <div className="min-h-screen pt-32 bg-linear-to-br from-black via-zinc-900 to-black px-4 py-10 text-white">
       <div className="mx-auto w-full max-w-7xl space-y-10">
         {/* HEADER */}
         <div className="flex flex-col gap-2">

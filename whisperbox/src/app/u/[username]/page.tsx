@@ -80,7 +80,7 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen pt-30 bg-gradient-to-br from-black via-zinc-900 to-black px-4 py-10 text-white">
+    <div className="min-h-screen pt-30 bg-linear-to-br from-black via-zinc-900 to-black px-4 py-10 text-white">
       <div className="mx-auto w-full max-w-5xl space-y-10">
         {/* HEADER */}
         <div className="text-center space-y-3">
